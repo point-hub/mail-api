@@ -1,0 +1,16 @@
+@baseUrl = http://localhost:3400
+
+###rq
+# @name createMail
+# @prompt to
+# @prompt subject
+# @prompt html
+POST {{baseUrl}}/v1/mails HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "to": "{{to}}",
+  "subject": "{{subject}}",
+  "html": "{{html}}"
+}
