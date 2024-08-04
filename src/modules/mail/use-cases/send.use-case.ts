@@ -34,6 +34,8 @@ export class SendMailUseCase {
     await deps.schemaValidation(cleanEntity, sendValidation)
     // 3. database operation
     const response = await deps.createRepository.handle(cleanEntity, options)
+    // x. check api key
+    // x. sanitize html
     // 4. send email
     await deps.sendMail({
       to: input.to,
