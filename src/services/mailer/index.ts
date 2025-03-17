@@ -34,7 +34,7 @@ export class Mailer {
     console.info('Message sent: %s', info.messageId)
 
     // Preview only available when sending through an Ethereal account
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production' || !process.env?.['MAILGUN_APIKEY']) {
       console.info('Preview URL: %s', getTestMessageUrl(info))
     }
   }
