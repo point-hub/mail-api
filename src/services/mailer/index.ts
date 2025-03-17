@@ -18,7 +18,7 @@ export class Mailer {
   private static transporter: Transporter
 
   private static async setup() {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production' || !process.env?.['MAILGUN_APIKEY']) {
       await Mailer.setupDevelopmentAccount()
     } else {
       Mailer.setupMailgunAccount()

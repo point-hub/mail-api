@@ -1,6 +1,6 @@
 import type { ICreateOutput, ICreateRepository, ISchemaValidation } from '@point-hub/papi'
 
-import { ISendOptions } from '@/services/mailer'
+import type { ISendOptions } from '@/services/mailer'
 
 import { MailEntity } from '../entity'
 import { sendValidation } from '../validations/send.validation'
