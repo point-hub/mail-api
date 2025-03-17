@@ -1,0 +1,52 @@
+@baseUrl = http://localhost:3400
+
+###
+# @name createUser
+# @prompt name
+# @prompt username
+# @prompt email
+POST {{baseUrl}}/v1/users HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "{{name}}",
+  "username": "{{username}}",
+  "email": "{{email}}"
+}
+
+###
+# @name retrieveAllUser
+GET {{baseUrl}}/v1/users HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+###
+# @name retrieveUser
+# @prompt id
+GET {{baseUrl}}/v1/users/{{id}} HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+###
+# @name updateUser
+# @prompt id
+# @prompt name
+# @prompt username
+# @prompt email
+PATCH {{baseUrl}}/v1/users/{{id}} HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "{{name}}",
+  "username": "{{username}}",
+  "email": "{{email}}",
+}
+
+###
+# @name deleteUser
+# @prompt id
+DELETE {{baseUrl}}/v1/users/{{id}} HTTP/1.1
+Accept: application/json
+Content-Type: application/json
