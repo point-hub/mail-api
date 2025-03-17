@@ -3,7 +3,7 @@ export interface ICorsConfig {
   credentials: boolean
 }
 
-export const origin = `${process.env['CORS_ORIGIN']}`
+export const origin = `${process.env['CLIENT_URL']}`
 export const credentials = process.env['CORS_CREDENTIALS'] === 'true' ? true : false
 
 const corsConfig: ICorsConfig = {
