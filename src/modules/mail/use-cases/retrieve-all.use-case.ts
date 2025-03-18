@@ -12,6 +12,8 @@ export interface IOptions {
 
 export class RetrieveAllMailUseCase {
   static async handle(input: IInput, deps: IDeps, options?: IOptions): Promise<IRetrieveAllOutput> {
+    const query = input.query
+    query.sort = '-created_at'
     return await deps.retrieveAllRepository.handle(input.query, options)
   }
 }

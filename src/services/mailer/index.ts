@@ -14,18 +14,22 @@ export interface ISendOptions extends SendMailOptions {
   context?: Record<string, string>
 }
 
+export interface ISendMail {
+  (data: ISendOptions): Promise<void>
+}
+
 export class Mailer {
   private static transporter: Transporter
 
   private static async setup() {
-    if (process.env.NODE_ENV !== 'production' || !process.env?.['MAILGUN_APIKEY']) {
+    if (process.env.NODE_ENV !== 'production' || !process.env['MAILGUN_APIKEY']) {
       await Mailer.setupDevelopmentAccount()
     } else {
       Mailer.setupMailgunAccount()
     }
   }
 
-  public static async send(data: ISendOptions) {
+  public static async send(data: ISendOptions): Promise<void> {
     await Mailer.setup()
 
     data.from = `${mailConfig.fromName} <${mailConfig.fromAddress}>`

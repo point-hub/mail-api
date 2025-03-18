@@ -1,6 +1,6 @@
 import type { ICreateOutput, ICreateRepository, ISchemaValidation } from '@point-hub/papi'
 
-import type { ISendOptions } from '@/services/mailer'
+import type { ISendMail } from '@/services/mailer'
 
 import { MailEntity } from '../entity'
 import { sendValidation } from '../validations/send.validation'
@@ -14,7 +14,7 @@ export interface IDeps {
   cleanObject(object: object): object
   createRepository: ICreateRepository
   schemaValidation: ISchemaValidation
-  sendMail(data: ISendOptions): Promise<void>
+  sendMail: ISendMail
 }
 export interface IOptions {
   session?: unknown
@@ -27,22 +27,22 @@ export class SendMailUseCase {
       to: input.to,
       subject: input.subject,
       html: input.html,
+      created_at: new Date(),
     })
-    mailEntity.generateCreatedDate()
     const cleanEntity = deps.cleanObject(mailEntity.data)
     // 2. validate schema
     await deps.schemaValidation(cleanEntity, sendValidation)
     // 3. database operation
     const response = await deps.createRepository.handle(cleanEntity, options)
-    // x. check api key
-    // x. sanitize html
-    // 4. send email
+    // TODO: 4. check api key
+    // TODO: 5. sanitize html
+    // 6. send email
     await deps.sendMail({
       to: input.to,
       subject: input.subject,
       html: input.html,
     })
-    // 5. return response
+    // 7. return response
     return response
   }
 }

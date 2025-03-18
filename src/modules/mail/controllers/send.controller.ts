@@ -17,7 +17,7 @@ export const sendController: IController = async (controllerInput: IControllerIn
     const createRepository = new CreateRepository(controllerInput.dbConnection)
     // 3. handle business rules
     const response = await SendMailUseCase.handle(
-      controllerInput.httpRequest.body,
+      controllerInput.httpRequest['body'],
       {
         cleanObject: objClean,
         createRepository,
