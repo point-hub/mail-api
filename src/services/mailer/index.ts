@@ -22,14 +22,18 @@ export class Mailer {
   private static transporter: Transporter
 
   private static async setup() {
-    if (process.env.NODE_ENV !== 'production' || !process.env['MAILGUN_APIKEY']) {
-      await Mailer.setupDevelopmentAccount()
-    } else {
-      Mailer.setupMailgunAccount()
+    if (process.env.NODE_ENV !== 'production') {
+      return await Mailer.setupDevelopmentAccount()
     }
+
+    Mailer.setupMailgunAccount()
   }
 
   public static async send(data: ISendOptions): Promise<void> {
+    if (process.env.NODE_ENV === 'production' && !process.env['MAILGUN_APIKEY']) {
+      return
+    }
+
     await Mailer.setup()
 
     data.from = `${mailConfig.fromName} <${mailConfig.fromAddress}>`
@@ -38,7 +42,7 @@ export class Mailer {
     console.info('Message sent: %s', info.messageId)
 
     // Preview only available when sending through an Ethereal account
-    if (process.env.NODE_ENV !== 'production' || !process.env?.['MAILGUN_APIKEY']) {
+    if (process.env.NODE_ENV !== 'production') {
       console.info('Preview URL: %s', getTestMessageUrl(info))
     }
   }
